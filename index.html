@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Special Invitation For You 💕 | Romantic Date Proposal</title>
+  <meta name="description" content="A special, interactive romantic date invitation crafted with love and magical animations. Developed by Vikul Tyagi.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="rose">
+  <!-- Background Canvas for Floating Particles & Sparkles -->
+  <canvas id="ambient-canvas"></canvas>
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Top Floating Controls -->
+  <header class="top-controls">
+    <button id="music-toggle" class="control-btn" aria-label="Toggle Romantic Melody" title="Play Romantic Melody">
+      <div class="music-icon-wrap">
+        <span class="music-bars">
+          <span class="bar bar-1"></span>
+          <span class="bar bar-2"></span>
+          <span class="bar bar-3"></span>
+          <span class="bar bar-4"></span>
+        </span>
+      </div>
+      <span class="control-btn-label">Music</span>
+    </button>
+
+    <div class="top-center-badge">
+      <span class="sparkle-icon">✨</span>
+      <span id="badge-sender-text">A Special Delivery</span>
+      <span class="sparkle-icon">✨</span>
+    </div>
+
+    <button id="customize-toggle" class="control-btn" aria-label="Customize Proposal" title="Customize for your girlfriend">
+      <span class="gear-icon">⚙️</span>
+      <span class="control-btn-label">Customize</span>
+    </button>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- Screen 0: Romantic Envelope Intro -->
+    <section id="screen-intro" class="screen-card active">
+      <div class="envelope-wrapper" id="envelope-wrapper">
+        <div class="envelope-shadow"></div>
+        <div class="envelope">
+          <div class="envelope-flap"></div>
+          <div class="envelope-pocket"></div>
+          <div class="envelope-letter">
+            <div class="letter-preview-content">
+              <span class="heart-stamp">💌</span>
+              <p class="letter-teaser">To my favorite person in the entire world...</p>
+            </div>
+          </div>
+          <div class="wax-seal" id="wax-seal-btn" role="button" tabindex="0" aria-label="Open Love Letter">
+            <span class="wax-seal-heart">💖</span>
+            <span class="wax-seal-text">TAP TO OPEN</span>
+          </div>
+        </div>
+      </div>
+      <div class="intro-hint-box">
+        <p class="intro-greeting">Hey <span class="recipient-name-highlight">Princess</span> ✨</p>
+        <p class="intro-subtext">You have 1 unread transmission from <span class="sender-name-highlight">Your Tech Boyfriend</span>.</p>
+        <button id="btn-open-letter" class="btn-primary pulse-action">
+          <span>Open My Message</span>
+          <span class="arrow-icon">→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen 1: The Big Proposal Question -->
+    <section id="screen-proposal" class="screen-card">
+      <div class="proposal-card-header">
+        <div class="cute-avatar-container">
+          <div class="floating-cute-character" id="cute-character">
+            <div class="character-face">
+              <span class="character-eyes">🥺</span>
+              <span class="character-cheeks">🌸</span>
+            </div>
+            <div class="character-hearts">
+              <span class="mini-heart h1">💕</span>
+              <span class="mini-heart h2">✨</span>
+              <span class="mini-heart h3">💖</span>
+            </div>
+          </div>
+        </div>
+        <span class="romantic-script-tag">An Important Question</span>
+        <h1 class="proposal-title" id="proposal-headline">Will you go on a date with me?</h1>
+        <p class="proposal-subtitle" id="proposal-submsg">I promise good food, infinite laughs, sweet memories, and your favorite treats! 🍓</p>
+      </div>
+
+      <!-- Interactive Proposal Buttons Area -->
+      <div class="proposal-action-arena" id="action-arena">
+        <button id="btn-yes" class="btn-glow-yes" type="button">
+          <span class="btn-yes-content">
+            <span class="btn-emoji">🥰</span>
+            <span class="btn-yes-text">YES, ABSOLUTELY!</span>
+            <span class="btn-sparkles">✨</span>
+          </span>
+        </button>
+
+        <button id="btn-no" class="btn-playful-no" type="button">
+          <span class="btn-no-text">No 😢</span>
+        </button>
+      </div>
+
+      <div class="proposal-footer-hint">
+        <span id="no-reaction-message" class="reaction-hint-text"></span>
+      </div>
+    </section>
+
+    <!-- Screen 2: Date Planner - Step 1: Food & Cuisine -->
+    <section id="screen-food" class="screen-card">
+      <div class="step-indicator">
+        <span class="step-dot active">1</span>
+        <span class="step-line"></span>
+        <span class="step-dot">2</span>
+        <span class="step-line"></span>
+        <span class="step-dot">3</span>
+        <span class="step-line"></span>
+        <span class="step-dot">4</span>
+      </div>
+      <div class="step-header">
+        <span class="step-tag">Step 1 of 4 • Delicious Cravings</span>
+        <h2 class="step-title">What are we eating, love? 🍝</h2>
+        <p class="step-subtitle">Pick the culinary vibe that makes your heart & tummy happy!</p>
+      </div>
+
+      <div class="options-grid" id="food-options-grid">
+        <div class="option-card" data-category="food" data-value="Italian & Wine" data-icon="🍝">
+          <div class="option-icon-box">🍝</div>
+          <div class="option-details">
+            <h3 class="option-name">Italian & Candlelight</h3>
+            <p class="option-desc">Handmade pasta, woodfired pizza & warm cozy wine vibes.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="food" data-value="Sushi & Ramen" data-icon="🍣">
+          <div class="option-icon-box">🍣</div>
+          <div class="option-details">
+            <h3 class="option-name">Sushi & Japanese Delights</h3>
+            <p class="option-desc">Cute sushi rolls, gyoza, steaming ramen & boba tea.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="food" data-value="Tacos & Margaritas" data-icon="🌮">
+          <div class="option-icon-box">🌮</div>
+          <div class="option-details">
+            <h3 class="option-name">Spicy Tacos & Fiesta</h3>
+            <p class="option-desc">Crispy birria tacos, loaded nachos, churros & fun drinks.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="food" data-value="Romantic Fine Dining" data-icon="🍷">
+          <div class="option-icon-box">🍷</div>
+          <div class="option-details">
+            <h3 class="option-name">Rooftop Fine Dining</h3>
+            <p class="option-desc">Skyline views, dressed up glamour & chef special desserts.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="food" data-value="Street Food & Boba" data-icon="🧋">
+          <div class="option-icon-box">🧋</div>
+          <div class="option-details">
+            <h3 class="option-name">Street Food Crawl & Boba</h3>
+            <p class="option-desc">Tasting a bit of everything while walking hand in hand.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="food" data-value="Dessert Bar & Waffles" data-icon="🍨">
+          <div class="option-icon-box">🍨</div>
+          <div class="option-details">
+            <h3 class="option-name">Dessert & Gelato Heaven</h3>
+            <p class="option-desc">Warm chocolate lava cake, artisan gelato & berries.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+      </div>
+
+      <div class="step-nav-bar">
+        <button class="btn-secondary" id="btn-back-to-proposal">Back</button>
+        <button class="btn-primary" id="btn-next-food" disabled>
+          <span>Continue to Activity</span>
+          <span>→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen 3: Date Planner - Step 2: Activity / Adventure -->
+    <section id="screen-activity" class="screen-card">
+      <div class="step-indicator">
+        <span class="step-dot completed">✓</span>
+        <span class="step-line active"></span>
+        <span class="step-dot active">2</span>
+        <span class="step-line"></span>
+        <span class="step-dot">3</span>
+        <span class="step-line"></span>
+        <span class="step-dot">4</span>
+      </div>
+      <div class="step-header">
+        <span class="step-tag">Step 2 of 4 • Magical Moments</span>
+        <h2 class="step-title">What adventure awaits us? 🎡</h2>
+        <p class="step-subtitle">Choose the memory we're going to create together.</p>
+      </div>
+
+      <div class="options-grid" id="activity-options-grid">
+        <div class="option-card" data-category="activity" data-value="Stargazing & Cozy Picnic" data-icon="✨">
+          <div class="option-icon-box">✨</div>
+          <div class="option-details">
+            <h3 class="option-name">Stargazing & Blanket Fort</h3>
+            <p class="option-desc">Fairy lights, warm blankets, night sky & deep talks.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="activity" data-value="Sunset Beach Walk" data-icon="🌅">
+          <div class="option-icon-box">🌅</div>
+          <div class="option-details">
+            <h3 class="option-name">Sunset Walk by the Shore</h3>
+            <p class="option-desc">Golden hour ocean breeze, shell collecting & holding hands.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="activity" data-value="Arcade & Bowling Fun" data-icon="🕹️">
+          <div class="option-icon-box">🕹️</div>
+          <div class="option-details">
+            <h3 class="option-name">Retro Arcade & Games</h3>
+            <p class="option-desc">Claw machines, racing simulators, bowling & winning prizes.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="activity" data-value="Indie Cinema & Popcorn" data-icon="🎬">
+          <div class="option-icon-box">🎬</div>
+          <div class="option-details">
+            <h3 class="option-name">Private Movie & Snuggles</h3>
+            <p class="option-desc">Cozy velvet seats, buttery popcorn & favorite romantic film.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="activity" data-value="Scenic Late Night Drive" data-icon="🚗">
+          <div class="option-icon-box">🚗</div>
+          <div class="option-details">
+            <h3 class="option-name">Late Night Scenic Drive</h3>
+            <p class="option-desc">Curated romantic playlist, open windows & city lights.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+
+        <div class="option-card" data-category="activity" data-value="Bookstore & Coffee Hunt" data-icon="📚">
+          <div class="option-icon-box">📚</div>
+          <div class="option-details">
+            <h3 class="option-name">Bookstore & Cozy Cafe</h3>
+            <p class="option-desc">Picking books for each other, warm lattes & quiet smiles.</p>
+          </div>
+          <div class="option-check">✓</div>
+        </div>
+      </div>
+
+      <div class="step-nav-bar">
+        <button class="btn-secondary" id="btn-back-to-food">Back</button>
+        <button class="btn-primary" id="btn-next-activity" disabled>
+          <span>Continue to Timing</span>
+          <span>→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen 4: Date Planner - Step 3: Date & Timing -->
+    <section id="screen-schedule" class="screen-card">
+      <div class="step-indicator">
+        <span class="step-dot completed">✓</span>
+        <span class="step-line active"></span>
+        <span class="step-dot completed">✓</span>
+        <span class="step-line active"></span>
+        <span class="step-dot active">3</span>
+        <span class="step-line"></span>
+        <span class="step-dot">4</span>
+      </div>
+      <div class="step-header">
+        <span class="step-tag">Step 3 of 4 • Lock In The Day</span>
+        <h2 class="step-title">When is our rendezvous? 📅</h2>
+        <p class="step-subtitle">Pick the perfect day and hour for our romantic escape.</p>
+      </div>
+
+      <div class="schedule-selector-wrap">
+        <!-- Quick Day Options -->
+        <div class="quick-days-row">
+          <button class="quick-day-chip active" data-day="This Friday Evening">🌟 This Friday</button>
+          <button class="quick-day-chip" data-day="This Saturday Night">💫 This Saturday</button>
+          <button class="quick-day-chip" data-day="Sunday Sunset">🌅 Sunday Sunset</button>
+          <button class="quick-day-chip" data-day="Next Weekend">💖 Next Weekend</button>
+        </div>
+
+        <div class="custom-calendar-box">
+          <label for="date-picker" class="field-label">Or choose a custom date:</label>
+          <input type="date" id="date-picker" class="custom-date-input" />
+        </div>
+
+        <div class="time-slots-container">
+          <label class="field-label">Preferred Time of Day:</label>
+          <div class="time-chips-grid">
+            <button class="time-chip active" data-time="Sunset (6:00 PM)">🌅 Sunset (6:00 PM)</button>
+            <button class="time-chip" data-time="Evening Candlelight (7:30 PM)">🕯️ Evening (7:30 PM)</button>
+            <button class="time-chip" data-time="Moonlit Night (9:00 PM)">🌙 Moonlit (9:00 PM)</button>
+            <button class="time-chip" data-time="Afternoon Chill (3:00 PM)">☕ Afternoon (3:00 PM)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-nav-bar">
+        <button class="btn-secondary" id="btn-back-to-activity">Back</button>
+        <button class="btn-primary" id="btn-next-schedule">
+          <span>Continue to Dress Code</span>
+          <span>→</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen 5: Date Planner - Step 4: Dress Code & Vibe -->
+    <section id="screen-vibe" class="screen-card">
+      <div class="step-indicator">
+        <span class="step-dot completed">✓</span>
+        <span class="step-line active"></span>
+        <span class="step-dot completed">✓</span>
+        <span class="step-line active"></span>
+        <span class="step-dot completed">✓</span>
+        <span class="step-line active"></span>
+        <span class="step-dot active">4</span>
+      </div>
+      <div class="step-header">
+        <span class="step-tag">Step 4 of 4 • Dress Code & Sweet Note</span>
+        <h2 class="step-title">What should we wear? 👗</h2>
+        <p class="step-subtitle">Pick our aesthetic & leave an optional secret wish!</p>
+      </div>
+
+      <div class="vibe-cards-grid">
+        <div class="vibe-card active" data-vibe="Fancy & Elegant (Dress to Impress)" data-icon="✨">
+          <span class="vibe-icon">👗👔</span>
+          <h3 class="vibe-name">Fancy & Elegant</h3>
+          <p class="vibe-desc">Gorgeous dresses, crisp shirts & luxury scent.</p>
+        </div>
+
+        <div class="vibe-card" data-vibe="Cute & Casual Aesthetic" data-icon="🌸">
+          <span class="vibe-icon">🌸👟</span>
+          <h3 class="vibe-name">Cute & Casual</h3>
+          <p class="vibe-desc">Effortlessly stylish, comfortable and cute.</p>
+        </div>
+
+        <div class="vibe-card" data-vibe="Matching Hoodie Vibes" data-icon="🧸">
+          <span class="vibe-icon">🧸🍫</span>
+          <h3 class="vibe-name">Cozy Sweatshirts</h3>
+          <p class="vibe-desc">Warm hoodies, snuggles and relaxed laughs.</p>
+        </div>
+
+        <div class="vibe-card" data-vibe="90s Retro Vintage" data-icon="📼">
+          <span class="vibe-icon">📼🕶️</span>
+          <h3 class="vibe-name">Retro Vintage</h3>
+          <p class="vibe-desc">Vintage jackets, aesthetic film cameras & polaroids.</p>
+        </div>
+      </div>
+
+      <div class="secret-wish-box">
+        <label for="user-secret-wish" class="field-label">Special request or sweet note for our date? 💌 (Optional)</label>
+        <textarea id="user-secret-wish" class="custom-textarea" rows="2" placeholder="e.g., Don't forget my favorite chocolate strawberry dessert! 🍓"></textarea>
+      </div>
+
+      <div class="step-nav-bar">
+        <button class="btn-secondary" id="btn-back-to-schedule">Back</button>
+        <button class="btn-primary pulse-action" id="btn-generate-ticket">
+          <span>Seal The Deal & Get VIP Ticket</span>
+          <span class="sparkle-icon">✨</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Screen 6: Official Date Boarding Pass / Golden Ticket -->
+    <section id="screen-ticket" class="screen-card">
+      <div class="ticket-celebration-header">
+        <div class="celebration-badge">
+          <span class="badge-ring">🎉</span>
+          <span>DATE RESERVATION CONFIRMED</span>
+        </div>
+        <h2 class="ticket-headline">Here is your VIP Date Pass! 🎫</h2>
+        <p class="ticket-subtitle">Present this golden boarding pass upon arrival for unlimited hugs & happiness.</p>
+      </div>
+
+      <!-- Luxury Boarding Pass Ticket Container -->
+      <div class="boarding-pass-card" id="boarding-pass-element">
+        <div class="pass-hologram-strip"></div>
+
+        <!-- Main Ticket Left Section -->
+        <div class="pass-main-body">
+          <div class="pass-header">
+            <div class="pass-airline-brand">
+              <span class="pass-logo-heart">💖</span>
+              <div>
+                <span class="pass-airline-name">CUPID AIRWAYS • DATE CLASS</span>
+                <span class="pass-flight-num">FLIGHT: LOVE-2026-XOXO</span>
+              </div>
+            </div>
+            <div class="pass-status-stamp">CONFIRMED 💯</div>
+          </div>
+
+          <div class="pass-route-row">
+            <div class="route-city">
+              <span class="city-code">YOU</span>
+              <span class="city-name recipient-name-val">Sophia</span>
+            </div>
+            <div class="route-airplane-path">
+              <span class="airplane-icon">✈️</span>
+              <div class="path-line">
+                <span class="path-heart">💕</span>
+              </div>
+              <span class="flight-type">DIRECT TO MY HEART</span>
+            </div>
+            <div class="route-city">
+              <span class="city-code">ME</span>
+              <span class="city-name sender-name-val">Your Boyfriend</span>
+            </div>
+          </div>
+
+          <div class="pass-grid-info">
+            <div class="info-block">
+              <span class="info-label">DATE & TIME</span>
+              <span class="info-val" id="ticket-date-val">This Friday @ 7:30 PM</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">CUISINE</span>
+              <span class="info-val" id="ticket-food-val">Italian & Candlelight 🍝</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">ADVENTURE</span>
+              <span class="info-val" id="ticket-activity-val">Stargazing & Blanket Fort ✨</span>
+            </div>
+            <div class="info-block">
+              <span class="info-label">DRESS CODE</span>
+              <span class="info-val" id="ticket-vibe-val">Fancy & Elegant 👗</span>
+            </div>
+          </div>
+
+          <div class="pass-secret-wish-row" id="ticket-wish-container">
+            <span class="info-label">SPECIAL SWEET NOTE</span>
+            <p class="ticket-wish-text" id="ticket-wish-val">"Unlimited kisses and chocolate dessert included!"</p>
+          </div>
+
+          <!-- Ticket Credit Signature -->
+          <div class="pass-dev-credit">
+            <span>Special Invitation Crafted by <strong class="dev-name">Vikul Tyagi</strong> ✨</span>
+          </div>
+        </div>
+
+        <!-- Ticket Perforation Divider -->
+        <div class="pass-perforation">
+          <span class="notch notch-top"></span>
+          <span class="perforation-line"></span>
+          <span class="notch notch-bottom"></span>
+        </div>
+
+        <!-- Ticket Stub Right Section -->
+        <div class="pass-stub">
+          <div class="stub-header">
+            <span class="stub-title">BOARDING PASS</span>
+            <span class="stub-seat">SEAT: 1A (VIP)</span>
+          </div>
+
+          <div class="stub-passenger">
+            <span class="info-label">PASSENGER</span>
+            <span class="stub-name recipient-name-val">Sophia</span>
+          </div>
+
+          <div class="stub-gate-group">
+            <div class="stub-gate-item">
+              <span class="info-label">GATE</span>
+              <span class="gate-val">HEAVEN</span>
+            </div>
+            <div class="stub-gate-item">
+              <span class="info-label">VIBE</span>
+              <span class="gate-val">100/10</span>
+            </div>
+          </div>
+
+          <div class="stub-barcode-wrap">
+            <div class="mock-barcode">
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span class="barcode-num">XOXO-FOREVER-LOVE</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticket Action Buttons -->
+      <div class="ticket-actions-group">
+        <button id="btn-download-ticket" class="btn-primary pulse-action">
+          <span>📸 Download Date Pass (PNG)</span>
+        </button>
+
+        <button id="btn-share-whatsapp" class="btn-whatsapp">
+          <span>💬 Send Confirmation to WhatsApp</span>
+        </button>
+
+        <button id="btn-read-love-letter" class="btn-glass">
+          <span>💌 Open Secret Love Letter</span>
+        </button>
+
+        <button id="btn-restart-plan" class="btn-subtle">
+          <span>🔄 Re-plan Date Choices</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Bottom Footer Developer Credit -->
+    <footer class="app-footer">
+      <p class="footer-credit">
+        Developed with 💖 by <span class="footer-author">Vikul Tyagi</span>
+      </p>
+      <button id="btn-open-admin" class="admin-lock-link" title="Admin Backup & Response Log">
+        <span>🔒 Admin Responses Backup</span>
+      </button>
+    </footer>
+
+  </main>
+
+  <!-- Love Letter Modal -->
+  <div id="love-letter-modal" class="modal-overlay">
+    <div class="letter-modal-card">
+      <button class="modal-close-btn" id="btn-close-letter" aria-label="Close Letter">✕</button>
+      <div class="letter-parchment">
+        <div class="parchment-stamp">💖</div>
+        <h3 class="letter-modal-title">Dearest <span class="recipient-name-val">Princess</span>,</h3>
+        <div class="letter-modal-body" id="typewriter-letter-content">
+          <!-- Text dynamically typed or inserted -->
+        </div>
+        <div class="letter-modal-signoff">
+          <p>Forever & always,</p>
+          <span class="signature-font sender-name-val">Your Boyfriend</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech Guy Live Customizer Drawer Modal -->
+  <div id="customizer-modal" class="modal-overlay">
+    <div class="customizer-drawer">
+      <div class="drawer-header">
+        <div class="drawer-title-wrap">
+          <span class="gear-bounce">⚙️</span>
+          <div>
+            <h3>Customize Proposal</h3>
+            <p class="drawer-subtitle">Personalize for your girlfriend & send her the link!</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="btn-close-customizer" aria-label="Close Customizer">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <div class="form-group">
+          <label for="input-recipient" class="form-label">Girlfriend's Name / Pet Name</label>
+          <input type="text" id="input-recipient" class="form-input" placeholder="e.g., Sophia / My Queen" value="Sophia">
+        </div>
+
+        <div class="form-group">
+          <label for="input-sender" class="form-label">Your Name / Title</label>
+          <input type="text" id="input-sender" class="form-input" placeholder="e.g., Alex / Your Tech Boyfriend" value="Vikul">
+        </div>
+
+        <div class="form-group">
+          <label for="input-whatsapp-phone" class="form-label">Your WhatsApp Phone Number (with Country Code)</label>
+          <input type="text" id="input-whatsapp-phone" class="form-input" placeholder="e.g., 919876543210" value="">
+          <p class="link-hint">When she clicks 'Send to WhatsApp', it will message this number directly!</p>
+        </div>
+
+        <div class="form-group">
+          <label for="input-proposal-text" class="form-label">Date Proposal Headline</label>
+          <input type="text" id="input-proposal-text" class="form-input" placeholder="Will you go on a date with me?" value="Will you go on a date with me?">
+        </div>
+
+        <div class="form-group">
+          <label for="input-custom-letter" class="form-label">Secret Love Letter Message</label>
+          <textarea id="input-custom-letter" class="form-textarea" rows="4" placeholder="Write your heartfelt message here...">From the first moment we met, you turned every simple moment into my favorite memory. I cannot wait to dress up, look into your gorgeous eyes, and take you out on the most special date you deserve. Get ready to be spoiled, beautiful! 💕</textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Theme Palette</label>
+          <div class="theme-palette-grid">
+            <button class="theme-chip active" data-theme-name="rose">
+              <span class="palette-dot dot-rose"></span>
+              <span>Romantic Rose</span>
+            </button>
+            <button class="theme-chip" data-theme-name="midnight">
+              <span class="palette-dot dot-midnight"></span>
+              <span>Midnight Romance</span>
+            </button>
+            <button class="theme-chip" data-theme-name="lavender">
+              <span class="palette-dot dot-lavender"></span>
+              <span>Dreamy Lavender</span>
+            </button>
+            <button class="theme-chip" data-theme-name="peach">
+              <span class="palette-dot dot-peach"></span>
+              <span>Sunset Peach</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Shareable Link Box -->
+        <div class="share-link-box">
+          <label class="form-label">Your Custom Shareable Link</label>
+          <div class="copy-input-row">
+            <input type="text" id="shareable-url-input" class="form-input shareable-link-input" readonly value="">
+            <button id="btn-copy-share-link" class="btn-copy">
+              <span id="copy-btn-text">Copy Link</span>
+            </button>
+          </div>
+          <p class="link-hint">Send this URL on Instagram / WhatsApp to surprise her!</p>
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <button id="btn-save-customizer" class="btn-primary w-100">
+          <span>Apply Changes</span>
+          <span>✨</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Responses & Backup Modal -->
+  <div id="admin-modal" class="modal-overlay">
+    <div class="admin-drawer">
+      <div class="drawer-header">
+        <div class="drawer-title-wrap">
+          <span class="gear-bounce">🔒</span>
+          <div>
+            <h3>Admin Response Backup</h3>
+            <p class="drawer-subtitle">Track everything she selected & instant notification webhooks</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="btn-close-admin" aria-label="Close Admin">✕</button>
+      </div>
+
+      <!-- Password Lock Screen for Admin -->
+      <div id="admin-auth-screen" class="admin-auth-box">
+        <p class="auth-instruction">Enter Admin PIN to view her submitted answers:</p>
+        <div class="pin-input-group">
+          <input type="password" id="admin-pin-input" class="form-input pin-field" placeholder="Default PIN: 2026" maxlength="8">
+          <button id="btn-unlock-admin" class="btn-primary">Unlock</button>
+        </div>
+        <p class="link-hint">Default passcode is <strong>2026</strong></p>
+      </div>
+
+      <!-- Authenticated Admin Content -->
+      <div id="admin-content-screen" class="admin-content-box" style="display:none;">
+        <div class="admin-quick-actions">
+          <button id="btn-export-csv" class="btn-secondary">📥 Export CSV / Excel</button>
+          <button id="btn-clear-responses" class="btn-subtle text-danger">🗑️ Clear Logs</button>
+        </div>
+
+        <div class="admin-responses-container">
+          <h4 class="admin-section-title">Submitted Responses History (<span id="response-count-badge">0</span>)</h4>
+          <div id="admin-responses-list" class="responses-list">
+            <!-- Dynamic response items -->
+          </div>
+        </div>
+
+        <!-- Optional Instant Push Alert Webhook -->
+        <div class="webhook-setup-card">
+          <h4 class="admin-section-title">⚡ Instant Push Notification to Your Phone (Discord / Telegram / Formspree)</h4>
+          <p class="link-hint">Paste your Discord Webhook URL or Formspree endpoint below to get an instant alert on your phone whenever she submits!</p>
+          <input type="url" id="admin-webhook-url" class="form-input" placeholder="https://discord.com/api/webhooks/... or https://formspree.io/f/..." value="">
+          <button id="btn-save-webhook" class="btn-secondary btn-sm" style="margin-top:0.4rem;">Save Webhook URL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Hidden Canvas for Ticket Image Snapshot Export -->
+  <canvas id="ticket-export-canvas" style="display:none;"></canvas>
+
+  <!-- Audio Synthesis and App Scripts -->
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
