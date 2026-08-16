@@ -8,7 +8,7 @@
 
   // --- App State ---
   const state = {
-    recipient: 'Sophia',
+    recipient: 'Baby',
     sender: 'Vikul',
     whatsappPhone: '',
     proposalText: 'Will you go on a date with me?',
