@@ -289,23 +289,48 @@
   }
 
   function sendWebhookNotification(record) {
-    const payload = {
-      content: `🎉 **New Date Proposal Accepted!** 💖\n` +
-        `👤 **Passenger:** ${record.recipient}\n` +
-        `💌 **Sender:** ${record.sender}\n` +
-        `🍝 **Food:** ${record.food}\n` +
-        `✨ **Activity:** ${record.activity}\n` +
-        `📅 **When:** ${record.date} @ ${record.time}\n` +
-        `👗 **Dress Code:** ${record.vibe}\n` +
-        `📝 **Note:** "${record.wish}"\n` +
-        `⏰ **Time Logged:** ${record.timestamp}`
-    };
+    if (!state.webhookUrl) return;
 
-    fetch(state.webhookUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(e => console.log('Webhook push error (silent):', e));
+    if (state.webhookUrl.includes('@')) {
+      // Direct Email Dispatch via FormSubmit
+      fetch(`https://formsubmit.co/ajax/${encodeURIComponent(state.webhookUrl)}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🎉 ${record.recipient} Accepted Your Date Proposal! 💖`,
+          Passenger: record.recipient,
+          Sender: record.sender,
+          Food: record.food,
+          Activity: record.activity,
+          DateTime: `${record.date} @ ${record.time}`,
+          DressCode: record.vibe,
+          SpecialNote: record.wish,
+          Timestamp: record.timestamp
+        })
+      }).catch(e => console.log('Email dispatch error:', e));
+    } else {
+      // Discord / Formspree / Custom Webhook
+      const payload = {
+        content: `🎉 **New Date Proposal Accepted!** 💖\n` +
+          `👤 **Passenger:** ${record.recipient}\n` +
+          `💌 **Sender:** ${record.sender}\n` +
+          `🍝 **Food:** ${record.food}\n` +
+          `✨ **Activity:** ${record.activity}\n` +
+          `📅 **When:** ${record.date} @ ${record.time}\n` +
+          `👗 **Dress Code:** ${record.vibe}\n` +
+          `📝 **Note:** "${record.wish}"\n` +
+          `⏰ **Time Logged:** ${record.timestamp}`
+      };
+
+      fetch(state.webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(e => console.log('Webhook push error (silent):', e));
+    }
   }
 
   // --- Setup Event Listeners ---
@@ -351,6 +376,7 @@
           title: card.dataset.value,
           icon: card.dataset.icon
         };
+        updateLiveTracker();
         btnNextFood.removeAttribute('disabled');
       });
     });
@@ -365,6 +391,7 @@
           title: card.dataset.value,
           icon: card.dataset.icon
         };
+        updateLiveTracker();
         btnNextActivity.removeAttribute('disabled');
       });
     });
@@ -376,6 +403,7 @@
         document.querySelectorAll('.quick-day-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         state.selectedDate = chip.dataset.day;
+        updateLiveTracker();
       });
     });
 
@@ -385,6 +413,7 @@
         const dateObj = new Date(e.target.value + 'T00:00:00');
         const formatted = dateObj.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
         state.selectedDate = formatted;
+        updateLiveTracker();
       }
     });
 
@@ -394,6 +423,7 @@
         document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         state.selectedTime = chip.dataset.time;
+        updateLiveTracker();
       });
     });
 
@@ -404,6 +434,7 @@
         document.querySelectorAll('.vibe-card').forEach(c => c.classList.remove('active'));
         card.classList.add('active');
         state.selectedVibe = card.dataset.vibe;
+        updateLiveTracker();
       });
     });
 
@@ -590,12 +621,18 @@
     btnExportCsv?.addEventListener('click', exportResponsesCsv);
     btnClearResponses?.addEventListener('click', clearAllResponses);
 
+    // Add Sample Demo Entry Button
+    const btnAddSample = document.getElementById('btn-add-sample');
+    btnAddSample?.addEventListener('click', addSampleDemoResponse);
+
+    // Save Email/Webhook Alert Destination
+    const adminAlertEmail = document.getElementById('admin-alert-email');
     btnSaveWebhook?.addEventListener('click', () => {
-      const url = adminWebhookUrl?.value.trim() || '';
-      state.webhookUrl = url;
+      const val = adminAlertEmail?.value.trim() || '';
+      state.webhookUrl = val;
       try {
-        localStorage.setItem('date_proposer_webhook', url);
-        showToast('⚡ Webhook URL saved successfully!');
+        localStorage.setItem('date_proposer_webhook', val);
+        showToast('⚡ Alert Destination saved!');
       } catch (e) {
         showToast('Saved in memory!');
       }
@@ -608,6 +645,41 @@
         openAdminModal();
       }
     });
+  }
+
+  function updateLiveTracker() {
+    const liveFood = document.getElementById('live-food-tag');
+    const liveActivity = document.getElementById('live-activity-tag');
+    const liveSchedule = document.getElementById('live-schedule-tag');
+    const liveVibe = document.getElementById('live-vibe-tag');
+
+    if (liveFood) liveFood.textContent = state.selectedFood ? `${state.selectedFood.title} ${state.selectedFood.icon}` : 'None selected yet';
+    if (liveActivity) liveActivity.textContent = state.selectedActivity ? `${state.selectedActivity.title} ${state.selectedActivity.icon}` : 'None selected yet';
+    if (liveSchedule) liveSchedule.textContent = `${state.selectedDate} @ ${state.selectedTime}`;
+    if (liveVibe) liveVibe.textContent = state.selectedVibe;
+  }
+
+  function addSampleDemoResponse() {
+    const demo = {
+      id: 'DATE-' + Date.now(),
+      timestamp: new Date().toLocaleString(),
+      recipient: state.recipient || 'Baby',
+      sender: state.sender || 'Vikul',
+      food: 'Italian & Candlelight 🍝',
+      activity: 'Stargazing & Blanket Fort ✨',
+      date: 'This Friday Evening',
+      time: 'Sunset (6:00 PM)',
+      vibe: 'Fancy & Elegant (Dress to Impress) 👗',
+      wish: 'Do not forget my favorite strawberry chocolate dessert! 🍓💕',
+    };
+
+    try {
+      const existing = JSON.parse(localStorage.getItem('date_proposals_responses_db') || '[]');
+      existing.unshift(demo);
+      localStorage.setItem('date_proposals_responses_db', JSON.stringify(existing));
+      renderAdminResponses();
+      showToast('✨ Demo Test Entry added to Admin log!');
+    } catch (e) {}
   }
 
   // --- Admin Modal Functions ---

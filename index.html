@@ -663,8 +663,20 @@
       <!-- Authenticated Admin Content -->
       <div id="admin-content-screen" class="admin-content-box" style="display:none;">
         <div class="admin-quick-actions">
-          <button id="btn-export-csv" class="btn-secondary">📥 Export CSV / Excel</button>
-          <button id="btn-clear-responses" class="btn-subtle text-danger">🗑️ Clear Logs</button>
+          <button id="btn-export-csv" class="btn-secondary">📥 Export CSV</button>
+          <button id="btn-add-sample" class="btn-secondary">✨ Add Test Demo Entry</button>
+          <button id="btn-clear-responses" class="btn-subtle text-danger">🗑️ Clear</button>
+        </div>
+
+        <!-- Live Current Session Choices Tracker -->
+        <div class="current-session-box" id="admin-live-session-tracker">
+          <h4 class="admin-section-title">⚡ Live Current Session (Real-Time Tracker)</h4>
+          <div class="response-grid-row" id="admin-live-details">
+            <span class="response-item-tag">🍝 <strong>Food:</strong> <span id="live-food-tag">None selected yet</span></span>
+            <span class="response-item-tag">✨ <strong>Adventure:</strong> <span id="live-activity-tag">None selected yet</span></span>
+            <span class="response-item-tag">📅 <strong>When:</strong> <span id="live-schedule-tag">This Friday @ 6:00 PM</span></span>
+            <span class="response-item-tag">👗 <strong>Vibe:</strong> <span id="live-vibe-tag">Fancy & Elegant</span></span>
+          </div>
         </div>
 
         <div class="admin-responses-container">
@@ -674,12 +686,12 @@
           </div>
         </div>
 
-        <!-- Optional Instant Push Alert Webhook -->
+        <!-- Direct Email or Webhook Alert Setup -->
         <div class="webhook-setup-card">
-          <h4 class="admin-section-title">⚡ Instant Push Notification to Your Phone (Discord / Telegram / Formspree)</h4>
-          <p class="link-hint">Paste your Discord Webhook URL or Formspree endpoint below to get an instant alert on your phone whenever she submits!</p>
-          <input type="url" id="admin-webhook-url" class="form-input" placeholder="https://discord.com/api/webhooks/... or https://formspree.io/f/..." value="">
-          <button id="btn-save-webhook" class="btn-secondary btn-sm" style="margin-top:0.4rem;">Save Webhook URL</button>
+          <h4 class="admin-section-title">📧 Free Email or Phone Push Alerts (When she fills on her phone)</h4>
+          <p class="link-hint">Enter your email or Discord Webhook below. When she finishes on her phone, you will get an instant alert with all her answers!</p>
+          <input type="text" id="admin-alert-email" class="form-input" placeholder="Your Email (e.g. vikul@gmail.com) or Webhook URL" value="">
+          <button id="btn-save-webhook" class="btn-secondary btn-sm" style="margin-top:0.4rem;">Save Alert Destination</button>
         </div>
       </div>
     </div>
