@@ -229,15 +229,16 @@
     ];
     noReactionMessage.textContent = reactions[(state.noClickCount - 1) % reactions.length];
 
-    // Compute random offsets within the arena or viewport
-    const maxOffsetX = (arenaRect.width / 2) - 40;
-    const maxOffsetY = 60;
+    // Compute mobile-safe random offsets within the arena
+    const arenaWidth = arenaRect.width || Math.min(window.innerWidth - 40, 480);
+    const maxOffsetX = Math.max(25, (arenaWidth / 2) - 60);
+    const maxOffsetY = 40;
     const randomX = (Math.random() * maxOffsetX * 2) - maxOffsetX;
     const randomY = (Math.random() * maxOffsetY * 2) - maxOffsetY;
 
-    // Shrink NO button, grow YES button exponentially
-    const noScale = Math.max(0.65, 1 - state.noClickCount * 0.08);
-    const yesScale = Math.min(1.45, 1 + state.noClickCount * 0.08);
+    // Shrink NO button, grow YES button safely
+    const noScale = Math.max(0.7, 1 - state.noClickCount * 0.06);
+    const yesScale = Math.min(1.25, 1 + state.noClickCount * 0.05);
 
     btnNo.style.position = 'relative';
     btnNo.style.transform = `translate(${randomX}px, ${randomY}px) scale(${noScale})`;
