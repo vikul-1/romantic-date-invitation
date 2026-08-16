@@ -134,10 +134,17 @@
     }
   }
 
-  // Parse URL search params (e.g. ?to=Sophia&from=Vikul&phone=919876543210&theme=rose)
+  // Parse URL search params (e.g. ?to=Baby&from=Vikul&phone=919876543210&theme=rose)
   function parseUrlParams() {
     const params = new URLSearchParams(window.location.search);
-    if (params.has('to')) state.recipient = decodeURIComponent(params.get('to')).trim();
+    if (params.has('to')) {
+      const toVal = decodeURIComponent(params.get('to')).trim();
+      if (toVal && toVal.toLowerCase() !== 'sophia') {
+        state.recipient = toVal;
+      } else {
+        state.recipient = 'Baby';
+      }
+    }
     if (params.has('from')) state.sender = decodeURIComponent(params.get('from')).trim();
     if (params.has('phone')) state.whatsappPhone = decodeURIComponent(params.get('phone')).trim();
     if (params.has('msg')) state.proposalText = decodeURIComponent(params.get('msg')).trim();
@@ -147,6 +154,9 @@
       if (['rose', 'midnight', 'lavender', 'peach'].includes(t)) {
         state.theme = t;
       }
+    }
+    if (!state.recipient || state.recipient.toLowerCase() === 'sophia') {
+      state.recipient = 'Baby';
     }
   }
 
